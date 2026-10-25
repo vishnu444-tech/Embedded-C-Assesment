@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <string.h>
+
+int main(void) {
+    char s[512];
+    int i, j = 0;
+
+    printf("Enter a sentence: ");
+    if (!fgets(s, sizeof s, stdin)) return 1;
+    s[strcspn(s, "\n")] = '\0';
+
+    for (i = 0; s[i] != '\0'; i++) {
+        /* copy a space only if the previously copied character was not a space */
+        if (s[i] == ' ' && j > 0 && s[j - 1] == ' ')
+            continue;
+        s[j++] = s[i];
+    }
+    s[j] = '\0';
+    printf("Cleaned string: %s\n", s);
+    return 0;
+}
