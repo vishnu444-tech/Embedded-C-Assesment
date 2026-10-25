@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+struct Complex {
+    double real;
+    double imag;
+};
+
+struct Complex addComplex(struct Complex a, struct Complex b) {
+    struct Complex sum;
+    sum.real = a.real + b.real;
+    sum.imag = a.imag + b.imag;
+    return sum;
+}
+
+void displayComplex(struct Complex c) {
+    if (c.imag >= 0)
+        printf("%.2f + %.2fi\n", c.real, c.imag);
+    else
+        printf("%.2f - %.2fi\n", c.real, -c.imag);
+}
+
+int main(void) {
+    struct Complex c1, c2, sum;
+
+    printf("Enter real and imaginary parts of first complex number: ");
+    if (scanf("%lf %lf", &c1.real, &c1.imag) != 2) { printf("Invalid input.\n"); return 1; }
+    printf("Enter real and imaginary parts of second complex number: ");
+    if (scanf("%lf %lf", &c2.real, &c2.imag) != 2) { printf("Invalid input.\n"); return 1; }
+
+    sum = addComplex(c1, c2);
+    printf("First  : "); displayComplex(c1);
+    printf("Second : "); displayComplex(c2);
+    printf("Sum    : "); displayComplex(sum);
+    return 0;
+}
