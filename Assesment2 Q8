@@ -1,1 +1,49 @@
+#include <stdio.h>
 
+/* Converts n to the given base (2-16) and stores the string in result */
+void decimalToBase(long long n, int base, char result[]) {
+    const char digits[] = "0123456789ABCDEF";
+    char temp[70];
+    int i = 0, j = 0, negative = 0;
+    unsigned long long u;
+
+    if (n == 0) {
+        result[0] = '0';
+        result[1] = '\0';
+        return;
+    }
+    if (n < 0) {
+        negative = 1;
+        u = -(unsigned long long)n;
+    } else {
+        u = (unsigned long long)n;
+    }
+    while (u > 0) {                 /* repeated division: remainders come out reversed */
+        temp[i++] = digits[u % base];
+        u /= base;
+    }
+    if (negative)
+        result[j++] = '-';
+    while (i > 0)                   /* reverse into the correct order */
+        result[j++] = temp[--i];
+    result[j] = '\0';
+}
+
+int main(void) {
+    long long n;
+    int base;
+    char result[70];
+    printf("Enter a decimal number: ");
+    if (scanf("%lld", &n) != 1) {
+        printf("Invalid number.\n");
+        return 1;
+    }
+    printf("Enter the target base (2-16): ");
+    if (scanf("%d", &base) != 1 || base < 2 || base > 16) {
+        printf("Base must be between 2 and 16.\n");
+        return 1;
+    }
+    decimalToBase(n, base, result);
+    printf("%lld in base %d = %s\n", n, base, result);
+    return 0;
+}
