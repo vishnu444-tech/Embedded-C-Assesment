@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main(void) {
+    unsigned int a, b, mask, result;
+    int p, n;
+
+    printf("Enter first number (a): ");
+    if (scanf("%u", &a) != 1) { printf("Invalid input.\n"); return 1; }
+    printf("Enter second number (b): ");
+    if (scanf("%u", &b) != 1) { printf("Invalid input.\n"); return 1; }
+    printf("Enter starting bit position (0 = LSB): ");
+    if (scanf("%d", &p) != 1) { printf("Invalid input.\n"); return 1; }
+    printf("Enter number of bits (n): ");
+    if (scanf("%d", &n) != 1) { printf("Invalid input.\n"); return 1; }
+
+    if (p < 0 || n <= 0 || p + n > 32) {
+        printf("Invalid range: position + count must fit within 32 bits.\n");
+        return 1;
+    }
+    mask = ((n == 32) ? 0xFFFFFFFFu : ((1u << n) - 1)) << p;
+    result = (a & ~mask) | ((b << p) & mask);   /* clear n bits in a, drop in b's bits */
+    printf("Result: %u (0x%X)\n", result, result);
+    return 0;
+}
