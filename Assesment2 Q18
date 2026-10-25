@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int main(void) {
+    unsigned int num, extracted, mask;
+    int p, n;
+
+    printf("Enter an integer: ");
+    if (scanf("%u", &num) != 1) { printf("Invalid input.\n"); return 1; }
+    printf("Enter starting bit position (0 = LSB): ");
+    if (scanf("%d", &p) != 1) { printf("Invalid input.\n"); return 1; }
+    printf("Enter number of bits to extract: ");
+    if (scanf("%d", &n) != 1) { printf("Invalid input.\n"); return 1; }
+
+    if (p < 0 || n <= 0 || p + n > 32) {
+        printf("Invalid range: position + count must fit within 32 bits.\n");
+        return 1;
+    }
+    mask = (n == 32) ? 0xFFFFFFFFu : ((1u << n) - 1);
+    extracted = (num >> p) & mask;   /* shift target bits to the right end, mask the rest off */
+    printf("Extracted value: %u (0x%X)\n", extracted, extracted);
+    return 0;
+}
