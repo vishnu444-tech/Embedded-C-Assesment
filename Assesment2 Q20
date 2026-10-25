@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+int main(void) {
+    unsigned int a, b, mask, newA, newB;
+    int p, n;
+
+    printf("Enter first number: ");
+    if (scanf("%u", &a) != 1) { printf("Invalid input.\n"); return 1; }
+    printf("Enter second number: ");
+    if (scanf("%u", &b) != 1) { printf("Invalid input.\n"); return 1; }
+    printf("Enter starting bit position (0 = LSB): ");
+    if (scanf("%d", &p) != 1) { printf("Invalid input.\n"); return 1; }
+    printf("Enter number of bits to swap: ");
+    if (scanf("%d", &n) != 1) { printf("Invalid input.\n"); return 1; }
+
+    if (p < 0 || n <= 0 || p + n > 32) {
+        printf("Invalid range: position + count must fit within 32 bits.\n");
+        return 1;
+    }
+    mask = ((n == 32) ? 0xFFFFFFFFu : ((1u << n) - 1)) << p;
+    newA = (a & ~mask) | (b & mask);   /* a keeps its outside bits, takes b's field */
+    newB = (b & ~mask) | (a & mask);   /* b keeps its outside bits, takes a's field */
+
+    printf("After swap:\nFirst  = %u (0x%X)\nSecond = %u (0x%X)\n", newA, newA, newB, newB);
+    return 0;
+}
