@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main(void) {
+    char s[256];
+    int left, right, isPal = 1;
+
+    printf("Enter a string: ");
+    if (!fgets(s, sizeof s, stdin)) return 1;
+    s[strcspn(s, "\n")] = '\0';
+
+    left = 0;
+    right = (int)strlen(s) - 1;
+    while (left < right) {
+        while (left < right && !isalnum((unsigned char)s[left]))  left++;
+        while (left < right && !isalnum((unsigned char)s[right])) right--;
+        if (tolower((unsigned char)s[left]) != tolower((unsigned char)s[right])) {
+            isPal = 0;
+            break;
+        }
+        left++;
+        right--;
+    }
+    if (isPal)
+        printf("\"%s\" is a palindrome.\n", s);
+    else
+        printf("\"%s\" is not a palindrome.\n", s);
+    return 0;
+}
