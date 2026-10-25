@@ -1,0 +1,21 @@
+//Q3
+
+#include <stdio.h>
+
+int main(void) {
+    int n, i;
+    unsigned long long fact = 1;   
+    printf("Enter a non-negative integer: ");
+    if (scanf("%d", &n) != 1 || n < 0) {
+        printf("Factorial is defined only for non-negative integers.\n");
+        return 1;
+    }
+    if (n > 20) {
+        printf("Value too large: %d! overflows unsigned long long (max n = 20).\n", n);
+        return 1;
+    }
+    for (i = 2; i <= n; i++)
+        fact *= i;
+    printf("%d! = %llu\n", n, fact);
+    return 0;
+}
