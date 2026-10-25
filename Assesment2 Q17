@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+/* Mask with n ones starting at bit position p (bit 0 = least significant) */
+unsigned int makeMask(int n, int p) {
+    unsigned int ones = (n == 32) ? 0xFFFFFFFFu : ((1u << n) - 1);
+    return ones << p;
+}
+
+int main(void) {
+    unsigned int num, result;
+    int p, n;
+
+    printf("Enter an integer: ");
+    if (scanf("%u", &num) != 1) { printf("Invalid input.\n"); return 1; }
+    printf("Enter starting bit position (0 = LSB): ");
+    if (scanf("%d", &p) != 1) { printf("Invalid input.\n"); return 1; }
+    printf("Enter number of bits to toggle: ");
+    if (scanf("%d", &n) != 1) { printf("Invalid input.\n"); return 1; }
+
+    if (p < 0 || n <= 0 || p + n > 32) {
+        printf("Invalid range: position + count must fit within 32 bits.\n");
+        return 1;
+    }
+    result = num ^ makeMask(n, p);   /* XOR with 1 flips a bit; XOR with 0 keeps it */
+    printf("Original: %u (0x%X)\n", num, num);
+    printf("After toggling %d bit(s) from position %d: %u (0x%X)\n", n, p, result, result);
+    return 0;
+}
